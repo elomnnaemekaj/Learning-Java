@@ -25,7 +25,7 @@ class MakeList {
 		i = i.trim();
 			if ((i.equals(null)) || (i.equals(""))) {
 				System.out.println("\nNo item name entered!");
-				item = null;
+				item = "";
 			} else {
 				item = i;
 				prompt = false;
@@ -54,28 +54,31 @@ class MakeList {
 
 	public ArrayList<String> makeList () {
 		while(prompt){
-			//System.out.println(prompt);
 			if (list.size() == 0){
 				System.out.println("\nWould you like to create a list? yes/no");
 				String myp = scanner.nextLine();
 				setPrompt(myp);
-			//	System.out.println(getPrompt());
 			} else {
 				System.out.println("\nWould you like to add to your list? yes/no");
 				String myp = scanner.nextLine();
 				setPrompt(myp);
-			//	System.out.println(getPrompt());
-
 			}
 			if (prompt){
 				System.out.println("\nWhat item would you like to add?");
 				String i = scanner.nextLine();
 				setItem(i);
-				if(!(getItem().equals(null))) {
+				if(!(getItem().equals(""))) {
 					list.add(getItem());
+				} 
+				prompt = true;
+			}
+
+			if (!prompt) {
+				if(list.size() == 0) {
+					System.out.println("\nNo list created");
+				} else {
+					System.out.print("\nSee your list below: \n");
 				}
-			} else {
-				System.out.print("\nSee your list below: \n");
 			}
 		}
 
