@@ -52,16 +52,40 @@ class MakeList {
 		return prompt;
 	}
 
+	public boolean verify (String s) {
+		s.trim();
+		if ((s.equals(null) || s.equals(""))) {
+			System.out.println("\nNo choice made");
+			return false;
+		} else if (!(s.equals("yes") || s.equals("y") || s.equals("no") || s.equals("n"))) {
+			System.out.println("\nInvalid choice!");
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	
 	public ArrayList<String> makeList () {
 		while(prompt){
 			if (list.size() == 0){
-				System.out.println("\nWould you like to create a list? yes/no");
+				System.out.println("\nWould you like to create a list? yes(y)/no(n)");
 				String myp = scanner.nextLine();
-				setPrompt(myp);
+				if (verify(myp)){
+					setPrompt(myp);
+				} else {
+					prompt = true;
+					continue;
+				}
 			} else {
-				System.out.println("\nWould you like to add to your list? yes/no");
+				System.out.println("\nWould you like to add to your list? yes(y)/no(n)");
 				String myp = scanner.nextLine();
-				setPrompt(myp);
+				if (verify(myp)){
+                                        setPrompt(myp);
+                                } else {
+                                        prompt = true;
+                                        continue;
+                                }
 			}
 			if (prompt){
 				System.out.println("\nWhat item would you like to add?");
