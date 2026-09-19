@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class SimpleGuessingGame {
@@ -13,6 +13,7 @@ public class SimpleGuessingGame {
 class GameController {
 
 	int numOfGuesses = 0;
+	//int guess = 0;
 	boolean win = false;
 	Scanner scanner = new Scanner(System.in);
 	private Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
@@ -41,11 +42,18 @@ class GameController {
 
 	public void startGame () {
 		//numOfGuesses = 0;
-		while (numOfGuesses < 3){
-			System.out.println("\nMake a guess!");
-			int guess = scanner.nextInt();
-			if (checker(guess)){
-				if (guess == rand) {
+		//while (numOfGuesses < 3)
+		do{
+			//System.out.println("\nMake a guess!");
+			try {
+				System.out.println("\nMake a guess!");
+				int guess = scanner.nextInt();
+				System.out.println(guess);
+			//} catch (InputMismatchException e) {
+			//	System.out.println("\nInvalid input!");
+			//}
+				if (checker(guess)){
+					if (guess == rand) {
 					System.out.println("Right guess! Bravoo!!");
 					win = true;
 					break;
@@ -55,7 +63,14 @@ class GameController {
 					continue;
 				}
 			}
-		}
+			//	scanner.close();
+			} catch (InputMismatchException e) {
+                                System.out.println("\nInvalid input!");
+			//	break;
+				numOfGuesses++;
+			}
+
+		} while (numOfGuesses < 2);
 		if (win){
 			System.out.println("\nYou won after " + numOfGuesses + " guesses!!!");
 		} else {
