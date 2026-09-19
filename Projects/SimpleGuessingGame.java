@@ -1,84 +1,62 @@
-import java.util.*;
-import java.util.regex.Pattern;
+import java.util.Scanner;
 
 public class SimpleGuessingGame {
-	public static void main (String [] args) {
-
-	GameController controller = new GameController();
-	controller.startGame();
-
-	}
+    public static void main(String[] args) {
+        GameController start = new GameController();
+        start.startGame();
+    }
 }
 
 class GameController {
+    private int input;
+    private boolean prompt = false;
+    private int rand = (int)(Math.random() * 6) + 1;
+    private int numOfGuesses = 1;
 
-	int numOfGuesses = 0;
-	//int guess = 0;
-	boolean win = false;
-	Scanner scanner = new Scanner(System.in);
-	private Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
-	int rand = (int)(Math.random()*6) + 1;
-	//System.out.println(rand);
+    public void setInput (int i){
+        input = i;
+    }
 
-	public boolean isNumeric(String strNum) {
-    		if (strNum == null) {
-        		return false;
-    		}
-    		return pattern.matcher(strNum).matches();
-	}
+    public int getInput() {
+        return input;
+    }
 
-	public boolean checker (int x) {
-		//x.trim();
-		if (x <= 0 || x >= 7){
-			System.out.println("\nYou can only choose between 1 and 6!");
-			return false;
-		}/* else if (!isNumeric(x)){
-			System.out.println("\nInvalid input");
-			return false;
-		}*/ else {
-			return true;
-		}
-	}
+    public boolean verifyInput(){
+        Scanner scanner = new Scanner(System.in);
+        if (scanner.hasNextInt()) {
+            setInput(scanner.nextInt());
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-	public void startGame () {
-		//numOfGuesses = 0;
-		//while (numOfGuesses < 3)
-		do{
-			//System.out.println("\nMake a guess!");
-			try {
-				System.out.println("\nMake a guess!");
-				int guess = scanner.nextInt();
-				System.out.println(guess);
-			//} catch (InputMismatchException e) {
-			//	System.out.println("\nInvalid input!");
-			//}
-				if (checker(guess)){
-					if (guess == rand) {
-					System.out.println("Right guess! Bravoo!!");
-					win = true;
-					break;
-				} else {
-					System.out.println("Wrong guess! Try again!!");
-					numOfGuesses++;
-					continue;
-				}
-			}
-			//	scanner.close();
-			} catch (InputMismatchException e) {
-                                System.out.println("\nInvalid input!");
-			//	break;
-				numOfGuesses++;
-			}
-
-		} while (numOfGuesses < 2);
-		if (win){
-			System.out.println("\nYou won after " + numOfGuesses + " guesses!!!");
-		} else {
-			System.out.println("\nYou lost! Restart game!");
-		}
-	}
-
-
+    public void startGame () {
+        while (!prompt) {
+            System.out.println("Enter a number between 1 and 6:");
+            if (verifyInput()) {
+                if (getInput() > 0 && getInput() < 7) {
+                   if (getInput() == rand){
+                        System.out.println("\nCorrect!");
+                        System.out.println("You won after " + numOfGuesses + " guess(es)!");
+                        prompt = true;
+                    } else {
+                        System.out.println("Wrong guess!");
+                        numOfGuesses++;
+                        prompt = false;
+                    }
+                } else {
+                    
+                    System.out.println("\nInput must be betwen 1 and 6");
+                    numOfGuesses++;
+                    prompt = false;
+                }
+            } else {
+                System.out.println("\nInvalid input!");
+                numOfGuesses++;
+                prompt = false;
+            }
+        }
+    }
+    
 }
-
-
