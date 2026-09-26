@@ -13,16 +13,7 @@ public class StudentAverage {
 
 class StudentAverageController {
 
-		private int myInt;
 		private double average;
-
-		public int getMyInt() {
-			return myInt;
-		}
-
-		public void setMyInt(int num) {
-			myInt = num;
-		}
 
 		public double getAverage() {
 			return average;
@@ -35,7 +26,6 @@ class StudentAverageController {
 		Scanner scanner = new Scanner(System.in);
 
 		public int getNum(Scanner scanner){
-			//System.out.println("\nEnter a number:");
 			while (!scanner.hasNextInt()){
 				System.out.println("\nInvalid input. Please enter a number:");
 				scanner.next();
