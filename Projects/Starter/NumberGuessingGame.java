@@ -30,10 +30,10 @@ class GameHandler {
 
     public boolean starter() {
 
-        if (numberOfGames < 2) {
+        if (numberOfGames == 0) {
             System.out.println("\nDo you want to play? yes(y)/no(n)\n");
         }   else {
-            System.out.println("\nDo you want to play agian? yes(y)/no(n)\n");
+            System.out.println("\nDo you want to play again? yes(y)/no(n)\n");
         }
 
         while (!isValid) {
@@ -43,8 +43,9 @@ class GameHandler {
                 play = true;
             } else if ((response.toLowerCase().equals("no")) || (response.toLowerCase().equals("n"))) {
                 System.out.println("Good bye!");
-                isValid = true;
                 play = false;
+                isValid = true;
+                break;
             } else {
                 System.out.println("Please select a valid option!");
                 System.out.println("Do you want to play? yes(y)/no(n)");
@@ -88,24 +89,23 @@ class GameHandler {
             numberOfGuesses++;
             if (compareGuess(random, getGuess())) {
                 System.out.print("You won after " + numberOfGuesses + " guess(es)!");
-                play = false;
+                numberOfGuesses = 0;
+                numberOfGames++;
+                isValid = false;
+                startGame();
             } else {
                 play = true;
             }
         }
 
-        numberOfGuesses = 0;
-        numberOfGames++;
-        startGame();
+        
+    
     }
 
     public void startGame() {
-        while (!play) {
-                starter();
-            if (starter()) {
+            while (starter()) {
                 handleGame();
             } 
-        }
     }
     
 }
