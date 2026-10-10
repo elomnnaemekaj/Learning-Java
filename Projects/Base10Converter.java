@@ -1,11 +1,29 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 
 public class Base10Converter {
     public static void main(String[] args) {
         Converter converter = new Converter();
-        System.out.println(converter.convertFromBase10(5,309));
-        System.out.println(converter.convertToBase10(2,1111));
+	Scanner scanner = new Scanner(System.in);
+	System.out.println("What would you like to do? Select\n1: Convert from Base 10\n2: Convert to Base 10");
+	
+	int choice = scanner.nextInt();
+    if (choice == 1) {
+        System.out.println("\nWhat base do you want to convert to?\n");
+        int base = scanner.nextInt();
+        System.out.println("\nWhat number do you want to convert?\n");
+        int num = scanner.nextInt();
+        System.out.println(converter.convertFromBase10(base, num));
+       } else if (choice == 2) {
+        System.out.println("\nWhat base do you want to convert from?\n");
+        int base = scanner.nextInt();
+        System.out.println("\nWhat number do you want to convert?\n");
+        int num = scanner.nextInt();
+        System.out.println(converter.convertToBase10(base, num));
+       }
+              
+       
     }
 }
 
