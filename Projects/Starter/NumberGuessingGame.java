@@ -6,6 +6,7 @@
   */
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class GuessingGame {
     public static void main(String[] args) {
@@ -20,59 +21,74 @@ class GameHandler {
 
 
     private int guess;
-    private int numberOfGuesses = 0;
+    private int guessCount = 0;
     private boolean play = false;
-    private boolean isValid = false;
     private String response;
-    private int random;
-    private boolean isRight;
+    private int randomNumber;
     private int numberOfGames = 0;
 
     public boolean starter() {
+        boolean isValid = false;
 
         if (numberOfGames == 0) {
-            System.out.println("\nDo you want to play? yes(y)/no(n)\n");
+            System.out.println("\nDo you want to play? yes(y)/no(n): ");
         }   else {
-            System.out.println("\nDo you want to play again? yes(y)/no(n)\n");
+            System.out.println("\nDo you want to play again? yes(y)/no(n):");
         }
 
         while (!isValid) {
-            response = input.handleWordInput(scanner);
-            if ((response.toLowerCase().equals("yes")) || (response.toLowerCase().equals("y"))) {
+
+            response = input.handleWordInput(scanner).toLowerCase();
+
+            if ((response.equals("yes")) || (response.equals("y"))) {
+
                 isValid = true;
                 play = true;
-            } else if ((response.toLowerCase().equals("no")) || (response.toLowerCase().equals("n"))) {
+
+            } else if ((response.equals("no")) || (response.equals("n"))) {
+
+                System.out.println("You played " + numberOfGames + " game(s).");
                 System.out.println("Good bye!");
                 play = false;
                 isValid = true;
                 break;
+
             } else {
-                System.out.println("Please select a valid option!");
-                System.out.println("Do you want to play? yes(y)/no(n)");
+
+                System.out.println("\nPlease select a valid option!");
+                System.out.print("Do you want to play? yes(y)/no(n): ");
                 isValid = false;
+
             }
         }
 
         return play;
     }
 
-    public void setGuess (int a){
-        if ((a < 1) || (a > 10)) {
-            System.out.print("Number must be between 1 and 10!");
-        } else  {
-            guess = a;
-        }
+    public boolean setGuess (int a){
+
+        while ((a < 1) || (a > 10)) {
+
+            System.out.println("Number must be between 1 and 10!");
+            return false;
+
+        } 
+            
+        guess = a;
+        return true;
+
     }
 
     public int getGuess() {
         return guess;
     }
 
-    public boolean compareGuess(int a, int b){
-        if (a <  b) {
+    public boolean compareGuess(int randomNumber, int guess){
+
+        if (randomNumber <  guess) {
             System.out.print("\nNice attempt! But your guess is higher than the right number\n");
             return false;
-        } else if (a > b) {
+        } else if (randomNumber > guess) {
             System.out.print("\nNice attempt! But your guess is lower than the right number\n");
             return false;
         } else {
@@ -82,24 +98,25 @@ class GameHandler {
     }
 
     public void handleGame(){
-        random = (int)(Math.random()*6) + 1;
-        while (play) {
-            System.out.print("Take a guess!");
-            setGuess(input.handleIntInput(scanner));
-            numberOfGuesses++;
-            if (compareGuess(random, getGuess())) {
-                System.out.print("You won after " + numberOfGuesses + " guess(es)!");
-                numberOfGuesses = 0;
-                numberOfGames++;
-                isValid = false;
-                startGame();
-            } else {
-                play = true;
-            }
-        }
-
+        randomNumber = ThreadLocalRandom.current().nextInt(1, 11);
         
-    
+        while (play) {
+
+            System.out.print("Take a guess!");
+
+            while (!setGuess(input.handleIntInput(scanner))) {
+                // Ask again if the guess is invalid
+            };
+
+            guessCount++;
+
+            if (compareGuess(randomNumber, getGuess())) {
+                System.out.print("You won after " + guessCount + " guess(es)!");
+                guessCount = 0;
+                numberOfGames++;
+                break;
+            }
+        }    
     }
 
     public void startGame() {
@@ -107,14 +124,11 @@ class GameHandler {
                 handleGame();
             } 
     }
-    
 }
 
 class InputHandler {
-    Scanner scanner = new Scanner(System.in);
-
     public int handleIntInput (Scanner scanner){
-        System.out.println("\nPlease enter a number!\n");
+        //System.out.println("\nPlease enter a number!\n");
         while (!(scanner.hasNextInt())) {
             System.out.println("Invalid input!\nPlease enter a number!\n");
             scanner.next();
@@ -124,22 +138,22 @@ class InputHandler {
     }
 
     public String handleWordInput (Scanner scanner){
-        System.out.println("\nPlease enter a text!\n");
+        //System.out.println("\nPlease enter a text!\n");
         while (!(scanner.hasNext())) {
             System.out.println("No entry detected!\nPlease enter a text!\n");
             scanner.next();
         }
 
-        return scanner.next();
+        return scanner.next().trim();
     }
 
-    public String handleTextInput (Scanner scanner){
-        System.out.println("\nPlease enter your text!\n");
-        while (!(scanner.hasNext())) {
-            System.out.println("No entry detected!\nPlease enter a text!\n");
-            scanner.next();
-        }
+    // public String handleTextInput (Scanner scanner){
+    //     System.out.println("\nPlease enter your text!\n");
+    //     while (!(scanner.hasNext())) {
+    //         System.out.println("No entry detected!\nPlease enter a text!\n");
+    //         scanner.next();
+    //     }
 
-        return scanner.nextLine();
-    }
+    //     return scanner.nextLine();
+    // }
 }
