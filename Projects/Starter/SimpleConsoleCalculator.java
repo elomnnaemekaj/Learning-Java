@@ -22,6 +22,7 @@ class Calculator {
   private int choiceFunction;
   private double userInput;
   private double resultTracker;
+  private boolean power = true;
 
   public void setUserInput(double entry) {
     userInput = entry;
@@ -60,6 +61,15 @@ class Calculator {
         break;
       default:
         break;
+    }
+  }
+
+  public void calculate() {
+    int initialState = 0;
+
+    while (power) {
+      System.out.print("First number");
+      
     }
   }
 
