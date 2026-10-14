@@ -1,13 +1,22 @@
 import java.util.Scanner;
 
 public class InputValidationHandler {
-    public int handleIntInput (Scanner scanner){
+    public int handleIntInput(Scanner scanner) {
         while (!(scanner.hasNextInt())) {
             System.out.println("Invalid input!\nPlease enter a number!\n");
             scanner.next();
         }
 
         return scanner.nextInt();
+    }
+    
+    public double handleDoubleInput(Scanner scanner) {
+        while (!(scanner.hasNextDouble())) {
+            System.out.println("Invalid input!\nPlease enter a number!\n");
+            scanner.next();
+        }
+
+        return scanner.nextDouble();
     }
 
     public String handleWordInput (Scanner scanner){
