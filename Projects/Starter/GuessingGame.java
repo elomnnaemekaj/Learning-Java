@@ -17,7 +17,7 @@ public class GuessingGame {
 
 class GameHandler {
     Scanner scanner = new Scanner(System.in);
-    InputHandler input = new InputHandler();
+    InputValidationHandler input = new InputValidationHandler();
 
 
     private int guess;
@@ -47,7 +47,7 @@ class GameHandler {
 
             } else if ((response.equals("no")) || (response.equals("n"))) {
 
-                System.out.println("You played " + numberOfGames + " game(s).");
+                System.out.println("\nYou played " + numberOfGames + " game(s).");
                 System.out.println("Good bye!");
                 play = false;
                 isValid = true;
@@ -124,36 +124,4 @@ class GameHandler {
                 handleGame();
             } 
     }
-}
-
-class InputHandler {
-    public int handleIntInput (Scanner scanner){
-        //System.out.println("\nPlease enter a number!\n");
-        while (!(scanner.hasNextInt())) {
-            System.out.println("Invalid input!\nPlease enter a number!\n");
-            scanner.next();
-        }
-
-        return scanner.nextInt();
-    }
-
-    public String handleWordInput (Scanner scanner){
-        //System.out.println("\nPlease enter a text!\n");
-        while (!(scanner.hasNext())) {
-            System.out.println("No entry detected!\nPlease enter a text!\n");
-            scanner.next();
-        }
-
-        return scanner.next().trim();
-    }
-
-    // public String handleTextInput (Scanner scanner){
-    //     System.out.println("\nPlease enter your text!\n");
-    //     while (!(scanner.hasNext())) {
-    //         System.out.println("No entry detected!\nPlease enter a text!\n");
-    //         scanner.next();
-    //     }
-
-    //     return scanner.nextLine();
-    // }
 }
