@@ -3,7 +3,7 @@
 
     Random number, Scanner input, loops, if/else
 
-  */
+*/
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -31,9 +31,9 @@ class GameHandler {
         boolean isValid = false;
 
         if (numberOfGames == 0) {
-            System.out.println("\nDo you want to play? yes(y)/no(n): ");
+            System.out.print("Do you want to play? yes(y)/no(n): ");
         }   else {
-            System.out.println("\nDo you want to play again? yes(y)/no(n):");
+            System.out.print("Do you want to play again? yes(y)/no(n): ");
         }
 
         while (!isValid) {
@@ -86,13 +86,13 @@ class GameHandler {
     public boolean compareGuess(int randomNumber, int guess){
 
         if (randomNumber <  guess) {
-            System.out.print("\nNice attempt! But your guess is higher than the right number\n");
+            System.out.println("\nNice attempt! But your guess is higher than the right number\n");
             return false;
         } else if (randomNumber > guess) {
-            System.out.print("\nNice attempt! But your guess is lower than the right number\n");
+            System.out.println("\nNice attempt! But your guess is lower than the right number\n");
             return false;
         } else {
-            System.out.print("\nCorrect!\n");
+            System.out.println("\nCorrect!\n");
             return true;
         }
     }
@@ -102,7 +102,7 @@ class GameHandler {
         
         while (play) {
 
-            System.out.print("Take a guess!");
+            System.out.print("Take a guess: ");
 
             while (!setGuess(input.handleIntInput(scanner))) {
                 // Ask again if the guess is invalid
