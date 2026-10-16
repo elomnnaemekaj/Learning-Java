@@ -12,6 +12,7 @@ public class SimpleConsoleCalculator {
 
   public static void main(String[] args) {
     Calculator calculator = new Calculator();
+    calculator.calculate();
   }
 }
 
@@ -20,55 +21,120 @@ class Calculator {
   InputValidationHandler input = new InputValidationHandler();
 
   private int choiceFunction;
-  private double userInput;
+  private String chosenFunction;
+  private double userInput1 = 0;
+  private double userInput2 = 0;
   private double resultTracker;
   private boolean power = true;
+  
 
-  public void setUserInput(double entry) {
-    userInput = entry;
+  public void setUserInput1(double entry) {
+    userInput1 = entry;
   }
 
-  public double getUserInput() {
-    return userInput;
+  public double getUserInput1() {
+    return userInput1;
   }
 
-  public void prompt() {
-    System.out.print("Type a number: ");
-    setUserInput(input.handleDoubleInput(scanner));
+  public void setUserInput2(double entry) {
+    userInput2 = entry;
   }
 
-  public void handleArithmeticFunctions() {
-    System.out.println("Choose operation: \n1.Add\n2.Subtract\n3.Multipy\n4.Divide\n5.Remainder\n");
-    choiceFunction = input.handleIntInput(scanner);
-    // if (choiceFunction == 1) {
-    //   resultTracker = Arithmetic.add(resultTracker, getUserInput());
-    // }
+  public double getUserInput2() {
+    return userInput2;
+  } 
+
+
+  public void setChoiceFunction(int entry) {
+    choiceFunction = entry;
+  }
+
+  public int getChoiceFunction() {
+    return choiceFunction;
+  } 
+
+  public double prompt() {
+    return input.handleDoubleInput(scanner);
+  }
+
+
+
+  public void handleArithmeticFunctions(int choiceFunction) {
     switch (choiceFunction) {
       case 1:
-        resultTracker = Arithmetic.add(resultTracker, getUserInput());
+        resultTracker = Arithmetic.add(getUserInput1(), getUserInput2());
+        chosenFunction = "+";
         break;
       case 2:
-        resultTracker = Arithmetic.subtract(resultTracker, getUserInput());
+        resultTracker = Arithmetic.subtract(getUserInput1(), getUserInput2());
+        chosenFunction = "-";
         break;
       case 3:
-        resultTracker = Arithmetic.multiply(resultTracker, getUserInput());
+        resultTracker = Arithmetic.multiply(getUserInput1(), getUserInput2());
+        chosenFunction = "x";
         break;
       case 4:
-        resultTracker = Arithmetic.divide(resultTracker, getUserInput());
+        resultTracker = Arithmetic.divide(getUserInput1(), getUserInput2());
+        chosenFunction = "÷";
         break;
       case 5:
-        resultTracker = Arithmetic.remainder(resultTracker, getUserInput());
+        resultTracker = Arithmetic.remainder(getUserInput1(), getUserInput2());
+        chosenFunction = "%";
+        break;
+      case 6:
+        resultTracker = resultTracker;
         break;
       default:
+        System.out.println("Invalid Choice");
         break;
     }
   }
 
   public void calculate() {
-    int initialState = 0;
-
+      System.out.print("Enter number: ");
+      setUserInput1(prompt());
+      System.out.println("\nChoose operation: \n1.Add\n2.Subtract\n3.Multipy\n4.Divide\n5.Remainder\n");
+      setChoiceFunction((int)(prompt()));
+      handleArithmeticFunctions(getChoiceFunction());
+      if (getUserInput1() == Math.floor(getUserInput1())) {
+        System.out.print((int) (getUserInput1()) + " " + chosenFunction + " ");
+      } else {
+        System.out.println(getUserInput1());
+      }
+      setUserInput2(prompt());
+      handleArithmeticFunctions(getChoiceFunction());
+      if (resultTracker == Math.floor(resultTracker)) {
+          System.out.println("\nYour result is: " + (int) (resultTracker) + "\n");
+        } else {
+          System.out.println("\nYour result is: " + resultTracker + "\n");
+        }      
     while (power) {
-      System.out.print("First number");
+      System.out.println("\nChoose operation: \n1. Add\n2. Subtract\n3. Multipy\n4. Divide\n5. Remainder\n6. Answer/End\n");
+      setUserInput1(resultTracker);
+      setChoiceFunction((int)(prompt()));
+      handleArithmeticFunctions(getChoiceFunction());
+      if (getChoiceFunction() > 0 && getChoiceFunction() < 6) {
+        if (getUserInput1() == Math.floor(getUserInput1())) {
+        System.out.print((int) (getUserInput1()) + " " + chosenFunction + " ");
+      } else {
+        System.out.println(getUserInput1());
+      }
+      setUserInput2(prompt());
+      handleArithmeticFunctions(getChoiceFunction());
+        if (resultTracker == Math.floor(resultTracker)) {
+          System.out.println("\nYour result is: " + (int) (resultTracker) + "\n");
+        } else {
+          System.out.println("\nYour result is: " + resultTracker + "\n");
+        }
+        power = true;
+      } else {
+        if (resultTracker == Math.floor(resultTracker)) {
+          System.out.println("\nYour result is: " + (int) (resultTracker) + "\n");
+        } else {
+          System.out.println("\nYour result is: " + resultTracker + "\n");
+        }
+        power = false;
+      }
       
     }
   }
