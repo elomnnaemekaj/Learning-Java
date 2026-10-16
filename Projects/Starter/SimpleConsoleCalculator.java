@@ -22,8 +22,8 @@ class Calculator {
 
   private int choiceFunction;
   private String chosenFunction;
-  private double userInput1 = 0;
-  private double userInput2 = 0;
+  private double userInput1;
+  private double userInput2;
   private double resultTracker;
   private boolean power = true;
   
@@ -53,11 +53,25 @@ class Calculator {
     return choiceFunction;
   } 
 
-  public double prompt() {
-    return input.handleDoubleInput(scanner);
+  public int prompt() {
+    return input.handleIntInput(scanner);
   }
 
+  public void formatNumberPrint(double number){
+    if (number == Math.floor(number)) {
+        System.out.print((int) (number) + " " + chosenFunction + " ");
+      } else {
+        System.out.println(number);
+      }
+  }
 
+  public void formatResultPrint(double number){
+    if (number == Math.floor(number)) {
+          System.out.println("\nYour result is: " + (int) (number) + "\n");
+        } else {
+          System.out.println("\nYour result is: " + number + "\n");
+        }
+  }
 
   public void handleArithmeticFunctions(int choiceFunction) {
     switch (choiceFunction) {
@@ -93,46 +107,28 @@ class Calculator {
   public void calculate() {
       System.out.print("Enter number: ");
       setUserInput1(prompt());
+
       System.out.println("\nChoose operation: \n1.Add\n2.Subtract\n3.Multipy\n4.Divide\n5.Remainder\n");
       setChoiceFunction((int)(prompt()));
+      
       handleArithmeticFunctions(getChoiceFunction());
-      if (getUserInput1() == Math.floor(getUserInput1())) {
-        System.out.print((int) (getUserInput1()) + " " + chosenFunction + " ");
-      } else {
-        System.out.println(getUserInput1());
-      }
+      formatNumberPrint(getUserInput1());
       setUserInput2(prompt());
       handleArithmeticFunctions(getChoiceFunction());
-      if (resultTracker == Math.floor(resultTracker)) {
-          System.out.println("\nYour result is: " + (int) (resultTracker) + "\n");
-        } else {
-          System.out.println("\nYour result is: " + resultTracker + "\n");
-        }      
+      formatResultPrint(resultTracker);
     while (power) {
       System.out.println("\nChoose operation: \n1. Add\n2. Subtract\n3. Multipy\n4. Divide\n5. Remainder\n6. Answer/End\n");
       setUserInput1(resultTracker);
       setChoiceFunction((int)(prompt()));
       handleArithmeticFunctions(getChoiceFunction());
       if (getChoiceFunction() > 0 && getChoiceFunction() < 6) {
-        if (getUserInput1() == Math.floor(getUserInput1())) {
-        System.out.print((int) (getUserInput1()) + " " + chosenFunction + " ");
-      } else {
-        System.out.println(getUserInput1());
-      }
+        formatNumberPrint(getUserInput1());
       setUserInput2(prompt());
       handleArithmeticFunctions(getChoiceFunction());
-        if (resultTracker == Math.floor(resultTracker)) {
-          System.out.println("\nYour result is: " + (int) (resultTracker) + "\n");
-        } else {
-          System.out.println("\nYour result is: " + resultTracker + "\n");
-        }
+      formatResultPrint(resultTracker);
         power = true;
       } else {
-        if (resultTracker == Math.floor(resultTracker)) {
-          System.out.println("\nYour result is: " + (int) (resultTracker) + "\n");
-        } else {
-          System.out.println("\nYour result is: " + resultTracker + "\n");
-        }
+        formatResultPrint(resultTracker);
         power = false;
       }
       
@@ -155,6 +151,9 @@ class Arithmetic {
   }
 
   public static double divide(double previousResult, double nextNumber) {
+    if (nextNumber == 0.0) {
+      System.out.println("Cannot divide by zero");
+    }
     return previousResult / nextNumber;
   }
 
