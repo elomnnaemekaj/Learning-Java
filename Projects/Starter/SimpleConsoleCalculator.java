@@ -54,10 +54,6 @@ class Calculator {
     return choiceFunction;
   } 
 
-  // public int prompt() {
-  //   return input.handleIntInput(scanner);
-  // }
-
   public void formatNumberPrint(double number){
     if (number == Math.floor(number)) {
         System.out.print((int) (number) + " " + chosenFunction + " ");
@@ -125,22 +121,24 @@ class Calculator {
       case 5:
         chosenFunction = "%";
         break;
-      case 6:
-        resultTracker = resultTracker;
-        break;
       default:
-        System.out.println("Invalid Choice");
         break;
     }
   }
 
-  public boolean handleZeroError() {
+  public boolean handleZeroError(int arg) {
     if ((error).equals("Cannot divide by zero")) {
       System.out.println("Math error");
       return false;
     } else {
-      formatResultPrint(resultTracker);
-      return true;
+      if (arg > 0 && arg < 6){
+        formatResultPrint(resultTracker);
+        return true;
+      } else {
+        formatResultPrint(resultTracker);
+        return false;
+      }
+      
     }
   }
 
@@ -158,24 +156,24 @@ class Calculator {
       setUserInput2(input.handleDoubleInput(scanner));
 
       handleArithmeticFunctions(getChoiceFunction());
-      power = handleZeroError();
+      power = handleZeroError(getChoiceFunction());
 
     while (power) {
-      System.out.println("\nChoose operation: \n1. Add\n2. Subtract\n3. Multipy\n4. Divide\n5. Remainder\n6. Answer/End\n");
+      System.out.println("\nChoose operation: \n1. Add\n2. Subtract\n3. Multipy\n4. Divide\n5. Remainder\n6. Press any other number for Answer/End\n");
       setUserInput1(resultTracker);
 
       setChoiceFunction(input.handleIntInput(scanner));
       
-      handleArithmeticFunctions(getChoiceFunction());
+      handleChoice(getChoiceFunction());
 
       if (getChoiceFunction() > 0 && getChoiceFunction() < 6) {
         formatNumberPrint(getUserInput1());
         setUserInput2(input.handleDoubleInput(scanner));
         handleArithmeticFunctions(getChoiceFunction());
         
-        power = handleZeroError();
+        power = handleZeroError(getChoiceFunction());
       } else {
-        power = handleZeroError();
+        power = handleZeroError(getChoiceFunction());
       }
       
     }
