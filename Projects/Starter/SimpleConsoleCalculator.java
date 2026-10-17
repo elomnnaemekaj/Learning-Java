@@ -83,20 +83,22 @@ class Calculator {
         break;
       case 4:
         try {
-          resultTracker = Arithmetic.divide(getUserInput1(), getUserInput2());
-        } catch (Exception e) {
-          error = "Cannot divide by zero";
+        resultTracker = Arithmetic.divide(getUserInput1(), getUserInput2());
+        error = "";
+        } catch (ArithmeticException e) {
+        error = "Cannot divide by zero";
         }
         break;
       case 5:
         try {
-          resultTracker = Arithmetic.remainder(getUserInput1(), getUserInput2());
-        } catch (Exception e) {
-          error = "Cannot divide by zero";
+        resultTracker = Arithmetic.divide(getUserInput1(), getUserInput2());
+        error = "";
+        } catch (ArithmeticException e) {
+        error = "Cannot divide by zero";
         }
         break;
       case 6:
-        resultTracker = resultTracker;
+        resultTracker = getUserInput1();
         break;
       default:
         System.out.println("Invalid Choice");
@@ -127,22 +129,23 @@ class Calculator {
   }
 
   public boolean handleZeroError(int arg) {
-    if ((error).equals("Cannot divide by zero")) {
-      System.out.println("Math error");
-      return false;
-    } else {
-      if (arg > 0 && arg < 6){
+     if (error.equals("Cannot divide by zero")) {
+        System.out.println("Math error: " + error);
+        error = "";
+        return false;
+    }
+
+    if (arg > 0 && arg < 6) {
         formatResultPrint(resultTracker);
         return true;
-      } else {
-        formatResultPrint(resultTracker);
-        return false;
-      }
-      
     }
+
+    formatResultPrint(resultTracker);
+    return false;
   }
 
   public void calculate() {
+    int wrongChoice = 0;
       System.out.print("Enter number: ");
       setUserInput1(input.handleDoubleInput(scanner));
 
@@ -150,13 +153,20 @@ class Calculator {
       setChoiceFunction(input.handleIntInput(scanner));
 
       handleChoice(getChoiceFunction());
+      if ((choiceFunction >= 1 && choiceFunction <= 5)) {
+        System.out.print("here!");
+        formatNumberPrint(getUserInput1());
 
-      formatNumberPrint(getUserInput1());
+        setUserInput2(input.handleDoubleInput(scanner));
 
-      setUserInput2(input.handleDoubleInput(scanner));
-
-      handleArithmeticFunctions(getChoiceFunction());
-      power = handleZeroError(getChoiceFunction());
+        handleArithmeticFunctions(getChoiceFunction());
+        power = handleZeroError(getChoiceFunction());
+      } else {
+        resultTracker = getUserInput1();
+        System.out.print("Invalid Choice! Try again!");
+        wrongChoice++;
+        power = true;
+      }
 
     while (power) {
       System.out.println("\nChoose operation: \n1. Add\n2. Subtract\n3. Multipy\n4. Divide\n5. Remainder\n6. Press any other number for Answer/End\n");
@@ -173,7 +183,12 @@ class Calculator {
         
         power = handleZeroError(getChoiceFunction());
       } else {
-        power = handleZeroError(getChoiceFunction());
+        if (wrongChoice < 1) {
+          wrongChoice++;
+          power = true;
+        } else{
+          power = false;
+        }
       }
       
     }
