@@ -71,38 +71,42 @@ class Calculator {
   }
 
   public void handleArithmeticFunctions(int choiceFunction) {
-    switch (choiceFunction) {
-      case 1:
-        resultTracker = Arithmetic.add(getUserInput1(), getUserInput2());
-        break;
-      case 2:
-        resultTracker = Arithmetic.subtract(getUserInput1(), getUserInput2());
-        break;
-      case 3:
-        resultTracker = Arithmetic.multiply(getUserInput1(), getUserInput2());
-        break;
-      case 4:
-        try {
-        resultTracker = Arithmetic.divide(getUserInput1(), getUserInput2());
-        error = "";
-        } catch (ArithmeticException e) {
-        error = "Cannot divide by zero";
+     try {
+        switch (choiceFunction) {
+            case 1:
+                resultTracker = Arithmetic.add(
+                    getUserInput1(), getUserInput2());
+                break;
+
+            case 2:
+                resultTracker = Arithmetic.subtract(
+                    getUserInput1(), getUserInput2());
+                break;
+
+            case 3:
+                resultTracker = Arithmetic.multiply(
+                    getUserInput1(), getUserInput2());
+                break;
+
+            case 4:
+                resultTracker = Arithmetic.divide(
+                    getUserInput1(), getUserInput2());
+                break;
+
+            case 5:
+                resultTracker = Arithmetic.remainder(
+                    getUserInput1(), getUserInput2());
+                break;
+
+            default:
+                System.out.println("Invalid Choice");
+                return;
         }
-        break;
-      case 5:
-        try {
-        resultTracker = Arithmetic.divide(getUserInput1(), getUserInput2());
+
         error = "";
-        } catch (ArithmeticException e) {
-        error = "Cannot divide by zero";
-        }
-        break;
-      case 6:
-        resultTracker = getUserInput1();
-        break;
-      default:
-        System.out.println("Invalid Choice");
-        break;
+
+    } catch (ArithmeticException e) {
+        error = e.getLocalizedMessage();
     }
   }
   
@@ -129,18 +133,17 @@ class Calculator {
   }
 
   public boolean handleZeroError(int arg) {
-     if (error.equals("Cannot divide by zero")) {
+     if (!error.isEmpty()) {
         System.out.println("Math error: " + error);
         error = "";
         return false;
     }
 
-    if (arg > 0 && arg < 6) {
+    if (arg >= 1 && arg <= 5) {
         formatResultPrint(resultTracker);
         return true;
     }
 
-    formatResultPrint(resultTracker);
     return false;
   }
 
@@ -212,14 +215,14 @@ class Arithmetic {
 
   public static double divide(double previousResult, double nextNumber) {
     if (nextNumber == 0.0) {
-      throw new ArithmeticException("");
+        throw new ArithmeticException("Cannot divide by zero");
     }
     return previousResult / nextNumber;
   }
 
   public static double remainder(double previousResult, double nextNumber) {
     if (nextNumber == 0.0) {
-      throw new ArithmeticException("");
+        throw new ArithmeticException("Cannot find remainder by zero");
     }
     return previousResult % nextNumber;
   }
