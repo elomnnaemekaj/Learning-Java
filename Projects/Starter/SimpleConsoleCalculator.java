@@ -25,8 +25,8 @@ class Calculator {
   private double userInput1;
   private double userInput2;
   private double resultTracker;
-  private boolean power = true;
-  private String error = "error";
+  private boolean isRunning = true;
+  private String errorMessage = "";
   
 
   public void setUserInput1(double entry) {
@@ -103,10 +103,10 @@ class Calculator {
                 return;
         }
 
-        error = "";
+        errorMessage = "";
 
     } catch (ArithmeticException e) {
-        error = e.getLocalizedMessage();
+        errorMessage = e.getLocalizedMessage();
     }
   }
   
@@ -132,10 +132,10 @@ class Calculator {
     }
   }
 
-  public boolean handleZeroError(int arg) {
-     if (!error.isEmpty()) {
-        System.out.println("Math error: " + error);
-        error = "";
+  public boolean handleCalculationResult(int arg) {
+     if (!errorMessage.isEmpty()) {
+        System.out.println("Math error: " + errorMessage);
+        errorMessage = "";
         return false;
     }
 
@@ -162,15 +162,15 @@ class Calculator {
         setUserInput2(input.handleDoubleInput(scanner));
 
         handleArithmeticFunctions(getChoiceFunction());
-        power = handleZeroError(getChoiceFunction());
+        isRunning = handleCalculationResult(getChoiceFunction());
       } else {
         resultTracker = getUserInput1();
         System.out.print("Invalid Choice! Try again!");
         wrongChoice++;
-        power = true;
+        isRunning = true;
       }
 
-    while (power) {
+    while (isRunning) {
       System.out.println("\nChoose operation: \n1. Add\n2. Subtract\n3. Multipy\n4. Divide\n5. Remainder\n");
       setUserInput1(resultTracker);
 
@@ -182,16 +182,16 @@ class Calculator {
         formatNumberPrint(getUserInput1());
         setUserInput2(input.handleDoubleInput(scanner));
         handleArithmeticFunctions(getChoiceFunction()); 
-        power = handleZeroError(getChoiceFunction());
+        isRunning = handleCalculationResult(getChoiceFunction());
         wrongChoice = 0;
       } else {
         if (wrongChoice < 1) {
           System.out.print("Invalid Choice! Try again!");
           wrongChoice++;
-          power = true;
+          isRunning = true;
         } else{
-          System.out.print("Power Off!");
-          power = false;
+          System.out.print("power Off!");
+          isRunning = false;
         }
       }
       
