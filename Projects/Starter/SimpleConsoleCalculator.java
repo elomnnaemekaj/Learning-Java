@@ -152,8 +152,12 @@ class Calculator {
       System.out.print("Enter number: ");
       setUserInput1(input.handleDoubleInput(scanner));
 
-      System.out.println("\nChoose operation: \n1.Add\n2.Subtract\n3.Multipy\n4.Divide\n5.Remainder\n");
+      System.out.println("\nChoose operation: \n1.Add\n2.Subtract\n3.Multipy\n4.Divide\n5.Remainder\n6. End\n");
       setChoiceFunction(input.handleIntInput(scanner));
+      if (choiceFunction == 6) {
+        System.out.print("Power Off!");
+        System.exit(0);
+      }
 
       handleChoice(getChoiceFunction());
       if ((choiceFunction >= 1 && choiceFunction <= 5)) {
@@ -171,11 +175,14 @@ class Calculator {
       }
 
     while (isRunning) {
-      System.out.println("\nChoose operation: \n1. Add\n2. Subtract\n3. Multipy\n4. Divide\n5. Remainder\n");
+      System.out.println("\nChoose operation: \n1. Add\n2. Subtract\n3. Multipy\n4. Divide\n5. Remainder\n6. End\n");
       setUserInput1(resultTracker);
 
       setChoiceFunction(input.handleIntInput(scanner));
-      
+      if (choiceFunction == 6) {
+        System.out.print("Power Off!");
+        System.exit(0);
+      }
       handleChoice(getChoiceFunction());
 
       if (getChoiceFunction() > 0 && getChoiceFunction() < 6) {
@@ -190,7 +197,7 @@ class Calculator {
           wrongChoice++;
           isRunning = true;
         } else{
-          System.out.print("power Off!");
+          System.out.print("Power Off!");
           isRunning = false;
         }
       }
