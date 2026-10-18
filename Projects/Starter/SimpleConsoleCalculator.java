@@ -54,10 +54,6 @@ class Calculator {
     return choiceFunction;
   } 
 
-  // public int prompt() {
-  //   return input.handleIntInput(scanner);
-  // }
-
   public void formatNumberPrint(double number){
     if (number == Math.floor(number)) {
         System.out.print((int) (number) + " " + chosenFunction + " ");
